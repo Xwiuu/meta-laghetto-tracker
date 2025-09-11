@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-// Passo 1: Mude a importação de 'Inter' para 'Poppins'
 import { Poppins } from "next/font/google";
+import { Providers } from "./providers"; // 1. CORREÇÃO: Usar importação relativa
+import { LoadingProvider } from "@/context/LoadingContext";
+import { LoadingOverlay } from "@/components/ui/loading-overlay";
 import "./globals.css";
 
-// Passo 2: Configure a nova fonte
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // Importamos diferentes pesos da fonte
+  weight: ["400", "500", "600", "700"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Laghetto Ads Tracker",
   description: "Plataforma de monitoramento de mídia",
 };
@@ -21,8 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* Passo 3: Aplique a classe da nova fonte no body */}
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <LoadingProvider>
+          <LoadingOverlay />
+          <Providers>{children}</Providers>
+        </LoadingProvider>
+        {/* 2. CORREÇÃO: Removido o hífen da tag de fecho */}
+      </body>
     </html>
   );
 }

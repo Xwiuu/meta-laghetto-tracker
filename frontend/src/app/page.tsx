@@ -1,48 +1,57 @@
-'use client';
+"use client";
 import { FormEvent, useState } from "react";
-import { useRouter } from 'next/navigation'; // Importa o hook de navegação
-import axios from 'axios';
+import { useRouter } from "next/navigation"; // Importa o hook de navegação
+import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLoading } from "@/context/LoadingContext";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('supervisor@laghetto.com.br');
-  const [password, setPassword] = useState('laghetto123');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter(); // Inicializa o router
+  const [email, setEmail] = useState("supervisor@laghetto.com.br");
+  const [password, setPassword] = useState("laghetto123");
+  const [error, setError] = useState("");
+  const router = useRouter();
+  const { isLoading, setIsLoading } = useLoading();
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3333/api/auth/login', {
-        email: email,
-        password: password,
-      });
+      const response = await axios.post(
+        "http://localhost:3333/api/auth/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
 
       const { token } = response.data;
-      console.log('Login bem-sucedido! Token:', token);
-      
+      console.log("Login bem-sucedido! Token:", token);
+
       // MUDANÇA: Salvamos o token no localStorage do navegador
-      localStorage.setItem('authToken', token);
+      localStorage.setItem("authToken", token);
 
       // MUDANÇA: Redirecionamos o usuário para a página do dashboard
-      router.push('/dashboard');
-
+      router.push("/dashboard");
     } catch (err) {
-      console.error('Erro no login:', err);
+      console.error("Erro no login:", err);
       if (axios.isAxiosError(err) && err.response) {
-        setError(err.response.data?.error || 'Não foi possível fazer login.');
+        setError(err.response.data?.error || "Não foi possível fazer login.");
       } else {
-        setError('Ocorreu um erro inesperado.');
+        setError("Ocorreu um erro inesperado.");
       }
     } finally {
-      setIsLoading(false);
+      setIsLoading(true);
     }
   };
 
@@ -51,8 +60,12 @@ export default function LoginPage() {
     <main className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 dark:from-gray-900 dark:to-gray-800">
       <Card className="w-full max-w-md mx-4 shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold">Laghetto Ads Tracker</CardTitle>
-          <CardDescription>Faça login para acessar o painel de controle.</CardDescription>
+          <CardTitle className="text-3xl font-bold">
+            Laghetto Ads Tracker
+          </CardTitle>
+          <CardDescription>
+            Faça login para acessar o painel de controle.
+          </CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
           <CardContent className="grid gap-6 p-6">
@@ -79,9 +92,15 @@ export default function LoginPage() {
                 className="focus-visible:ring-2 focus-visible:ring-blue-400"
               />
             </div>
-            {error && <p className="text-sm text-red-500 text-center">{error}</p>}
-            <Button type="submit" disabled={isLoading} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3">
-              {isLoading ? 'Entrando...' : 'Entrar'}
+            {error && (
+              <p className="text-sm text-red-500 text-center">{error}</p>
+            )}
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3"
+            >
+              {isLoading ? "Entrando..." : "Entrar"}
             </Button>
           </CardContent>
         </form>
