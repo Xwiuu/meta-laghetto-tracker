@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+---
 
-## Getting Started
 
-First, run the development server:
+Este é para o "designer" e "arquiteto" da casa. Explica como rodar a interface.
 
-```bash
+**Crie/Altere o ficheiro `meta-laghetto-tracker/frontend/README.md` com este conteúdo:**
+
+````markdown
+
+Esta pasta contém a interface do utilizador (UI) para o Meta Laghetto Tracker, construída com Next.js, Tailwind CSS e shadcn/ui.
+
+## ▶️ Como Executar o Frontend
+
+**1. Pré-requisitos:**
+
+- Node.js (v18+)
+- O servidor do **backend** deve estar a ser executado.
+
+**2. Instalação:**
+
+- Navegue para a pasta `frontend` no terminal.
+- Instale as dependências:
+  ```bash
+  npm install
+  ```
+
+3. Iniciar a Aplicação:
+
+Rode o servidor de desenvolvimento:
+
+Bash
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Abra o seu navegador e acesse http://localhost:3000.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Principais Páginas
+/: Página de Login.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+/dashboard: Dashboard principal de performance.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+/dashboard/gastos-diarios: Relatório detalhado de gastos.
 
-## Learn More
+Contextos Globais
+A aplicação utiliza React Context para gerir o estado global:
 
-To learn more about Next.js, take a look at the following resources:
+DateContext: Partilha o período de datas selecionado entre todas as páginas do dashboard.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+LoadingContext: Controla a exibição da tela de carregamento global.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+_(Para o backend, pode ser necessário criar um ficheiro `docker-compose.yml` simples e um `.env.example` para que as instruções do README façam sentido, mas podemos fazer isso como um polimento final se quiser)._
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Depois de criar estes três ficheiros, o seu projeto estará profissionalmente documentado e pronto para ser partilhado ou para que qualquer outro desenvolvedor (ou até mesmo nós no futuro) possa facilmente configurá-lo e executá-lo.
+````
